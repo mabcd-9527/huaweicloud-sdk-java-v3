@@ -1,0 +1,22 @@
+name: Test
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check
+        run: |
+          cd services || exit 1
+          service_dirs=$(find .  -maxdepth 1 -mindepth 1  -type d)
+          echo "$service_dirs"
+          for dir in $service_dirs
+          do
+            service_name=${dir##*/}
+            echo "service ${service_name}"
+          done
+        shell: bash

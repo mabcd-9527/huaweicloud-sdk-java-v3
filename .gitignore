@@ -1,0 +1,56 @@
+logs/
+/target/
+.vscode/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*~
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### maven ###
+!.mvn/wrapper/maven-wrapper.jar
+
+target/
+bin/
+.pydevproject
+.project
+.settings/
+*.class
+.classpath
+.#webclasspath
+*.log
+*.log.gz
+*.pyc
+.flattened-pom.xml
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.war
+*.ear
+*.iml
+.idea/
+
+var/
+
+!/db/src/test/resources/database-image/*

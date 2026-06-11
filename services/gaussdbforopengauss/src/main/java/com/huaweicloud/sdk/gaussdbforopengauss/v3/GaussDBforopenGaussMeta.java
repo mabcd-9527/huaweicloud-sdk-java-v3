@@ -30,6 +30,9 @@ import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BatchSetBackupPolicyRequ
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BatchSetBackupPolicyResponse;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BatchShowUpgradeCandidateVersionsRequest;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BatchShowUpgradeCandidateVersionsResponse;
+import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BindDNatRequest;
+import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BindDNatRequestBody;
+import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BindDNatResponse;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BindEIPRequestBody;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BindLtsConfigRequest;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.BindLtsConfigRequestBody;
@@ -199,6 +202,8 @@ import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListConfigurationsDiffRe
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListConfigurationsDiffResponse;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListConfigurationsRequest;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListConfigurationsResponse;
+import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListDNatInfoRequest;
+import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListDNatInfoResponse;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListDatabaseInstancesRequest;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListDatabaseInstancesResponse;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListDatabaseRolesRequest;
@@ -358,6 +363,8 @@ import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListTopTableVolumesRespo
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListTransactionRequest;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListTransactionRequestBody;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListTransactionResponse;
+import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListUpgradePathsRequest;
+import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListUpgradePathsResponse;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListWaitEventRequest;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListWaitEventRequestBody;
 import com.huaweicloud.sdk.gaussdbforopengauss.v3.model.ListWaitEventResponse;
@@ -925,6 +932,38 @@ public class GaussDBforopenGaussMeta {
             TypeCasts.uncheckedConversion(UpgradeInstancesRequestBody.class),
             f -> f.withMarshaller(BatchShowUpgradeCandidateVersionsRequest::getBody,
                 BatchShowUpgradeCandidateVersionsRequest::setBody));
+
+        // response
+
+        return builder.build();
+    }
+
+    public static final HttpRequestDef<BindDNatRequest, BindDNatResponse> bindDNat = genForBindDNat();
+
+    private static HttpRequestDef<BindDNatRequest, BindDNatResponse> genForBindDNat() {
+        // basic
+        HttpRequestDef.Builder<BindDNatRequest, BindDNatResponse> builder =
+            HttpRequestDef.builder(HttpMethod.PUT, BindDNatRequest.class, BindDNatResponse.class)
+                .withName("BindDNat")
+                .withUri("/v3/{project_id}/instances/{instance_id}/dnat")
+                .withContentType("application/json;charset=UTF-8");
+
+        // requests
+        builder.<String>withRequestField("instance_id",
+            LocationType.Path,
+            FieldExistence.NON_NULL_NON_EMPTY,
+            TypeCasts.uncheckedConversion(String.class),
+            f -> f.withMarshaller(BindDNatRequest::getInstanceId, BindDNatRequest::setInstanceId));
+        builder.<BindDNatRequest.XLanguageEnum>withRequestField("X-Language",
+            LocationType.Header,
+            FieldExistence.NULL_IGNORE,
+            TypeCasts.uncheckedConversion(BindDNatRequest.XLanguageEnum.class),
+            f -> f.withMarshaller(BindDNatRequest::getXLanguage, BindDNatRequest::setXLanguage));
+        builder.<BindDNatRequestBody>withRequestField("body",
+            LocationType.Body,
+            FieldExistence.NULL_IGNORE,
+            TypeCasts.uncheckedConversion(BindDNatRequestBody.class),
+            f -> f.withMarshaller(BindDNatRequest::getBody, BindDNatRequest::setBody));
 
         // response
 
@@ -2713,6 +2752,33 @@ public class GaussDBforopenGaussMeta {
             FieldExistence.NON_NULL_NON_EMPTY,
             TypeCasts.uncheckedConversion(ParamGroupDiffRequestBody.class),
             f -> f.withMarshaller(ListConfigurationsDiffRequest::getBody, ListConfigurationsDiffRequest::setBody));
+
+        // response
+
+        return builder.build();
+    }
+
+    public static final HttpRequestDef<ListDNatInfoRequest, ListDNatInfoResponse> listDNatInfo = genForListDNatInfo();
+
+    private static HttpRequestDef<ListDNatInfoRequest, ListDNatInfoResponse> genForListDNatInfo() {
+        // basic
+        HttpRequestDef.Builder<ListDNatInfoRequest, ListDNatInfoResponse> builder =
+            HttpRequestDef.builder(HttpMethod.GET, ListDNatInfoRequest.class, ListDNatInfoResponse.class)
+                .withName("ListDNatInfo")
+                .withUri("/v3/{project_id}/instances/{instance_id}/dnat")
+                .withContentType("application/json");
+
+        // requests
+        builder.<String>withRequestField("instance_id",
+            LocationType.Path,
+            FieldExistence.NON_NULL_NON_EMPTY,
+            TypeCasts.uncheckedConversion(String.class),
+            f -> f.withMarshaller(ListDNatInfoRequest::getInstanceId, ListDNatInfoRequest::setInstanceId));
+        builder.<ListDNatInfoRequest.XLanguageEnum>withRequestField("X-Language",
+            LocationType.Header,
+            FieldExistence.NULL_IGNORE,
+            TypeCasts.uncheckedConversion(ListDNatInfoRequest.XLanguageEnum.class),
+            f -> f.withMarshaller(ListDNatInfoRequest::getXLanguage, ListDNatInfoRequest::setXLanguage));
 
         // response
 
@@ -5354,6 +5420,41 @@ public class GaussDBforopenGaussMeta {
         return builder.build();
     }
 
+    public static final HttpRequestDef<ListUpgradePathsRequest, ListUpgradePathsResponse> listUpgradePaths =
+        genForListUpgradePaths();
+
+    private static HttpRequestDef<ListUpgradePathsRequest, ListUpgradePathsResponse> genForListUpgradePaths() {
+        // basic
+        HttpRequestDef.Builder<ListUpgradePathsRequest, ListUpgradePathsResponse> builder =
+            HttpRequestDef.builder(HttpMethod.GET, ListUpgradePathsRequest.class, ListUpgradePathsResponse.class)
+                .withName("ListUpgradePaths")
+                .withUri("/v3/{project_id}/instances/upgrade-paths")
+                .withContentType("application/json");
+
+        // requests
+        builder.<String>withRequestField("source_version",
+            LocationType.Query,
+            FieldExistence.NON_NULL_NON_EMPTY,
+            TypeCasts.uncheckedConversion(String.class),
+            f -> f.withMarshaller(ListUpgradePathsRequest::getSourceVersion,
+                ListUpgradePathsRequest::setSourceVersion));
+        builder.<String>withRequestField("target_version",
+            LocationType.Query,
+            FieldExistence.NULL_IGNORE,
+            TypeCasts.uncheckedConversion(String.class),
+            f -> f.withMarshaller(ListUpgradePathsRequest::getTargetVersion,
+                ListUpgradePathsRequest::setTargetVersion));
+        builder.<ListUpgradePathsRequest.XLanguageEnum>withRequestField("X-Language",
+            LocationType.Header,
+            FieldExistence.NULL_IGNORE,
+            TypeCasts.uncheckedConversion(ListUpgradePathsRequest.XLanguageEnum.class),
+            f -> f.withMarshaller(ListUpgradePathsRequest::getXLanguage, ListUpgradePathsRequest::setXLanguage));
+
+        // response
+
+        return builder.build();
+    }
+
     public static final HttpRequestDef<ListWaitEventRequest, ListWaitEventResponse> listWaitEvent =
         genForListWaitEvent();
 
@@ -7750,7 +7851,7 @@ public class GaussDBforopenGaussMeta {
         HttpRequestDef.Builder<SwitchLoggerReplicaRequest, SwitchLoggerReplicaResponse> builder =
             HttpRequestDef.builder(HttpMethod.POST, SwitchLoggerReplicaRequest.class, SwitchLoggerReplicaResponse.class)
                 .withName("SwitchLoggerReplica")
-                .withUri("/v3/{project_id}/instance/{instance_id}/switch-logger-replica")
+                .withUri("/v3/{project_id}/instances/{instance_id}/switch-logger-replica")
                 .withContentType("application/json;charset=UTF-8");
 
         // requests

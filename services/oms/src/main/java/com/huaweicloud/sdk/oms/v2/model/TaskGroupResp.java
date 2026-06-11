@@ -63,11 +63,6 @@ public class TaskGroupResp {
 
     private Boolean enableRestore;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonProperty(value = "enable_kms")
-
-    private Boolean enableKms;
-
     /**
      * 任务类型，默认为PREFIX。 LIST：对象列表迁移 URL_LIST：URL列表迁移， PREFIX：对象前缀迁移
      */
@@ -528,6 +523,11 @@ public class TaskGroupResp {
     private ConsistencyCheckEnum consistencyCheck;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty(value = "obs_system")
+
+    private String obsSystem;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty(value = "enable_requester_pays")
 
     private Boolean enableRequesterPays;
@@ -712,23 +712,6 @@ public class TaskGroupResp {
 
     public void setEnableRestore(Boolean enableRestore) {
         this.enableRestore = enableRestore;
-    }
-
-    public TaskGroupResp withEnableKms(Boolean enableKms) {
-        this.enableKms = enableKms;
-        return this;
-    }
-
-    /**
-     * 存储入OBS时是否使用KMS加密。
-     * @return enableKms
-     */
-    public Boolean getEnableKms() {
-        return enableKms;
-    }
-
-    public void setEnableKms(Boolean enableKms) {
-        this.enableKms = enableKms;
     }
 
     public TaskGroupResp withTaskType(TaskTypeEnum taskType) {
@@ -1271,6 +1254,23 @@ public class TaskGroupResp {
         this.consistencyCheck = consistencyCheck;
     }
 
+    public TaskGroupResp withObsSystem(String obsSystem) {
+        this.obsSystem = obsSystem;
+        return this;
+    }
+
+    /**
+     * OBS系统类型 BUCKET：一般桶 PFS：并行文件系统
+     * @return obsSystem
+     */
+    public String getObsSystem() {
+        return obsSystem;
+    }
+
+    public void setObsSystem(String obsSystem) {
+        this.obsSystem = obsSystem;
+    }
+
     public TaskGroupResp withEnableRequesterPays(Boolean enableRequesterPays) {
         this.enableRequesterPays = enableRequesterPays;
         return this;
@@ -1302,8 +1302,7 @@ public class TaskGroupResp {
             && Objects.equals(this.description, that.description) && Objects.equals(this.dstNode, that.dstNode)
             && Objects.equals(this.enableMetadataMigration, that.enableMetadataMigration)
             && Objects.equals(this.enableFailedObjectRecording, that.enableFailedObjectRecording)
-            && Objects.equals(this.enableRestore, that.enableRestore) && Objects.equals(this.enableKms, that.enableKms)
-            && Objects.equals(this.taskType, that.taskType)
+            && Objects.equals(this.enableRestore, that.enableRestore) && Objects.equals(this.taskType, that.taskType)
             && Objects.equals(this.bandwidthPolicy, that.bandwidthPolicy)
             && Objects.equals(this.smnConfig, that.smnConfig) && Objects.equals(this.sourceCdn, that.sourceCdn)
             && Objects.equals(this.migrateSince, that.migrateSince)
@@ -1324,6 +1323,7 @@ public class TaskGroupResp {
             && Objects.equals(this.objectOverwriteMode, that.objectOverwriteMode)
             && Objects.equals(this.dstStoragePolicy, that.dstStoragePolicy)
             && Objects.equals(this.consistencyCheck, that.consistencyCheck)
+            && Objects.equals(this.obsSystem, that.obsSystem)
             && Objects.equals(this.enableRequesterPays, that.enableRequesterPays);
     }
 
@@ -1338,7 +1338,6 @@ public class TaskGroupResp {
             enableMetadataMigration,
             enableFailedObjectRecording,
             enableRestore,
-            enableKms,
             taskType,
             bandwidthPolicy,
             smnConfig,
@@ -1366,6 +1365,7 @@ public class TaskGroupResp {
             objectOverwriteMode,
             dstStoragePolicy,
             consistencyCheck,
+            obsSystem,
             enableRequesterPays);
     }
 
@@ -1384,7 +1384,6 @@ public class TaskGroupResp {
             .append(toIndentedString(enableFailedObjectRecording))
             .append("\n");
         sb.append("    enableRestore: ").append(toIndentedString(enableRestore)).append("\n");
-        sb.append("    enableKms: ").append(toIndentedString(enableKms)).append("\n");
         sb.append("    taskType: ").append(toIndentedString(taskType)).append("\n");
         sb.append("    bandwidthPolicy: ").append(toIndentedString(bandwidthPolicy)).append("\n");
         sb.append("    smnConfig: ").append(toIndentedString(smnConfig)).append("\n");
@@ -1412,6 +1411,7 @@ public class TaskGroupResp {
         sb.append("    objectOverwriteMode: ").append(toIndentedString(objectOverwriteMode)).append("\n");
         sb.append("    dstStoragePolicy: ").append(toIndentedString(dstStoragePolicy)).append("\n");
         sb.append("    consistencyCheck: ").append(toIndentedString(consistencyCheck)).append("\n");
+        sb.append("    obsSystem: ").append(toIndentedString(obsSystem)).append("\n");
         sb.append("    enableRequesterPays: ").append(toIndentedString(enableRequesterPays)).append("\n");
         sb.append("}");
         return sb.toString();

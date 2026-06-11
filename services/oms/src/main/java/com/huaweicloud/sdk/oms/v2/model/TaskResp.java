@@ -44,11 +44,6 @@ public class TaskResp {
     private Boolean enableFailedObjectRecording;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonProperty(value = "enable_kms")
-
-    private Boolean enableKms;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty(value = "enable_metadata_migration")
 
     private Boolean enableMetadataMigration;
@@ -615,6 +610,81 @@ public class TaskResp {
     private Boolean enableRequesterPays;
 
     /**
+     * OBS系统类型 BUCKET：一般桶 PFS：并行文件系统
+     */
+    public static final class ObsSystemEnum {
+
+        /**
+         * Enum BUCKET for value: "BUCKET"
+         */
+        public static final ObsSystemEnum BUCKET = new ObsSystemEnum("BUCKET");
+
+        /**
+         * Enum PFS for value: "PFS"
+         */
+        public static final ObsSystemEnum PFS = new ObsSystemEnum("PFS");
+
+        private static final Map<String, ObsSystemEnum> STATIC_FIELDS = createStaticFields();
+
+        private static Map<String, ObsSystemEnum> createStaticFields() {
+            Map<String, ObsSystemEnum> map = new HashMap<>();
+            map.put("BUCKET", BUCKET);
+            map.put("PFS", PFS);
+            return Collections.unmodifiableMap(map);
+        }
+
+        private String value;
+
+        ObsSystemEnum(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        @JsonCreator
+        public static ObsSystemEnum fromValue(String value) {
+            if (value == null) {
+                return null;
+            }
+            return java.util.Optional.ofNullable(STATIC_FIELDS.get(value)).orElse(new ObsSystemEnum(value));
+        }
+
+        public static ObsSystemEnum valueOf(String value) {
+            if (value == null) {
+                return null;
+            }
+            return java.util.Optional.ofNullable(STATIC_FIELDS.get(value))
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected value '" + value + "'"));
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof ObsSystemEnum) {
+                return this.value.equals(((ObsSystemEnum) obj).value);
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.value.hashCode();
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty(value = "obs_system")
+
+    private ObsSystemEnum obsSystem;
+
+    /**
      * HIGH：高优先级 MEDIUM：中优先级 LOW：低优先级
      */
     public static final class TaskPriorityEnum {
@@ -805,23 +875,6 @@ public class TaskResp {
 
     public void setEnableFailedObjectRecording(Boolean enableFailedObjectRecording) {
         this.enableFailedObjectRecording = enableFailedObjectRecording;
-    }
-
-    public TaskResp withEnableKms(Boolean enableKms) {
-        this.enableKms = enableKms;
-        return this;
-    }
-
-    /**
-     * 存储入OBS时是否使用KMS加密。
-     * @return enableKms
-     */
-    public Boolean getEnableKms() {
-        return enableKms;
-    }
-
-    public void setEnableKms(Boolean enableKms) {
-        this.enableKms = enableKms;
     }
 
     public TaskResp withEnableMetadataMigration(Boolean enableMetadataMigration) {
@@ -1441,6 +1494,23 @@ public class TaskResp {
         this.enableRequesterPays = enableRequesterPays;
     }
 
+    public TaskResp withObsSystem(ObsSystemEnum obsSystem) {
+        this.obsSystem = obsSystem;
+        return this;
+    }
+
+    /**
+     * OBS系统类型 BUCKET：一般桶 PFS：并行文件系统
+     * @return obsSystem
+     */
+    public ObsSystemEnum getObsSystem() {
+        return obsSystem;
+    }
+
+    public void setObsSystem(ObsSystemEnum obsSystem) {
+        this.obsSystem = obsSystem;
+    }
+
     public TaskResp withTaskPriority(TaskPriorityEnum taskPriority) {
         this.taskPriority = taskPriority;
         return this;
@@ -1471,7 +1541,6 @@ public class TaskResp {
             && Objects.equals(this.completeSize, that.completeSize)
             && Objects.equals(this.description, that.description) && Objects.equals(this.dstNode, that.dstNode)
             && Objects.equals(this.enableFailedObjectRecording, that.enableFailedObjectRecording)
-            && Objects.equals(this.enableKms, that.enableKms)
             && Objects.equals(this.enableMetadataMigration, that.enableMetadataMigration)
             && Objects.equals(this.enableRestore, that.enableRestore)
             && Objects.equals(this.errorReason, that.errorReason) && Objects.equals(this.failedNum, that.failedNum)
@@ -1493,7 +1562,7 @@ public class TaskResp {
             && Objects.equals(this.dstStoragePolicy, that.dstStoragePolicy)
             && Objects.equals(this.consistencyCheck, that.consistencyCheck)
             && Objects.equals(this.enableRequesterPays, that.enableRequesterPays)
-            && Objects.equals(this.taskPriority, that.taskPriority);
+            && Objects.equals(this.obsSystem, that.obsSystem) && Objects.equals(this.taskPriority, that.taskPriority);
     }
 
     @Override
@@ -1503,7 +1572,6 @@ public class TaskResp {
             description,
             dstNode,
             enableFailedObjectRecording,
-            enableKms,
             enableMetadataMigration,
             enableRestore,
             errorReason,
@@ -1536,6 +1604,7 @@ public class TaskResp {
             dstStoragePolicy,
             consistencyCheck,
             enableRequesterPays,
+            obsSystem,
             taskPriority);
     }
 
@@ -1550,7 +1619,6 @@ public class TaskResp {
         sb.append("    enableFailedObjectRecording: ")
             .append(toIndentedString(enableFailedObjectRecording))
             .append("\n");
-        sb.append("    enableKms: ").append(toIndentedString(enableKms)).append("\n");
         sb.append("    enableMetadataMigration: ").append(toIndentedString(enableMetadataMigration)).append("\n");
         sb.append("    enableRestore: ").append(toIndentedString(enableRestore)).append("\n");
         sb.append("    errorReason: ").append(toIndentedString(errorReason)).append("\n");
@@ -1583,6 +1651,7 @@ public class TaskResp {
         sb.append("    dstStoragePolicy: ").append(toIndentedString(dstStoragePolicy)).append("\n");
         sb.append("    consistencyCheck: ").append(toIndentedString(consistencyCheck)).append("\n");
         sb.append("    enableRequesterPays: ").append(toIndentedString(enableRequesterPays)).append("\n");
+        sb.append("    obsSystem: ").append(toIndentedString(obsSystem)).append("\n");
         sb.append("    taskPriority: ").append(toIndentedString(taskPriority)).append("\n");
         sb.append("}");
         return sb.toString();

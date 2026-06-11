@@ -23,21 +23,6 @@ public class LoadSchemaMetadataReq {
 
     private List<DNInstance> dnInstance = null;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonProperty(value = "instance_id")
-
-    private String instanceId;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonProperty(value = "project_id")
-
-    private String projectId;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonProperty(value = "iam_account")
-
-    private IamAccount iamAccount;
-
     public LoadSchemaMetadataReq withCompressedDatabasesInfo(String compressedDatabasesInfo) {
         this.compressedDatabasesInfo = compressedDatabasesInfo;
         return this;
@@ -88,66 +73,6 @@ public class LoadSchemaMetadataReq {
         this.dnInstance = dnInstance;
     }
 
-    public LoadSchemaMetadataReq withInstanceId(String instanceId) {
-        this.instanceId = instanceId;
-        return this;
-    }
-
-    /**
-     * 实例id。
-     * @return instanceId
-     */
-    public String getInstanceId() {
-        return instanceId;
-    }
-
-    public void setInstanceId(String instanceId) {
-        this.instanceId = instanceId;
-    }
-
-    public LoadSchemaMetadataReq withProjectId(String projectId) {
-        this.projectId = projectId;
-        return this;
-    }
-
-    /**
-     * 项目id。
-     * @return projectId
-     */
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public LoadSchemaMetadataReq withIamAccount(IamAccount iamAccount) {
-        this.iamAccount = iamAccount;
-        return this;
-    }
-
-    public LoadSchemaMetadataReq withIamAccount(Consumer<IamAccount> iamAccountSetter) {
-        if (this.iamAccount == null) {
-            this.iamAccount = new IamAccount();
-            iamAccountSetter.accept(this.iamAccount);
-        }
-
-        return this;
-    }
-
-    /**
-     * Get iamAccount
-     * @return iamAccount
-     */
-    public IamAccount getIamAccount() {
-        return iamAccount;
-    }
-
-    public void setIamAccount(IamAccount iamAccount) {
-        this.iamAccount = iamAccount;
-    }
-
     @Override
     public boolean equals(java.lang.Object obj) {
         if (this == obj) {
@@ -158,13 +83,12 @@ public class LoadSchemaMetadataReq {
         }
         LoadSchemaMetadataReq that = (LoadSchemaMetadataReq) obj;
         return Objects.equals(this.compressedDatabasesInfo, that.compressedDatabasesInfo)
-            && Objects.equals(this.dnInstance, that.dnInstance) && Objects.equals(this.instanceId, that.instanceId)
-            && Objects.equals(this.projectId, that.projectId) && Objects.equals(this.iamAccount, that.iamAccount);
+            && Objects.equals(this.dnInstance, that.dnInstance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(compressedDatabasesInfo, dnInstance, instanceId, projectId, iamAccount);
+        return Objects.hash(compressedDatabasesInfo, dnInstance);
     }
 
     @Override
@@ -173,9 +97,6 @@ public class LoadSchemaMetadataReq {
         sb.append("class LoadSchemaMetadataReq {\n");
         sb.append("    compressedDatabasesInfo: ").append(toIndentedString(compressedDatabasesInfo)).append("\n");
         sb.append("    dnInstance: ").append(toIndentedString(dnInstance)).append("\n");
-        sb.append("    instanceId: ").append(toIndentedString(instanceId)).append("\n");
-        sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
-        sb.append("    iamAccount: ").append(toIndentedString(iamAccount)).append("\n");
         sb.append("}");
         return sb.toString();
     }
